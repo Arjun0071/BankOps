@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: django-app-deployment
+spec:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: django-app
+
+   template:
+      metadata:
+         labels:
+            app: django-app
+
+      spec:
+         containers:
+            - name: forum-container
+              image: arjunnigam/collab:v1
+              ports:
+                 - containerPort: 8000  
+              envFrom:
+                 - configMapRef:
+                      name: db-config      
